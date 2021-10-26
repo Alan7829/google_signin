@@ -1,10 +1,14 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_signin/bloc/login_bloc.dart';
 import 'package:google_signin/tools/shared_preferences.dart';
 
 class WelcomePage extends StatelessWidget {
   WelcomePage({Key? key}) : super(key: key);
   final _prefs = PreferenciasUsuario.instance;
+  final log = LoginBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +17,24 @@ class WelcomePage extends StatelessWidget {
     final email = _prefs.email;
 
     return Scaffold(
+      appBar: AppBar(
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              log.signOut();
+              Navigator.pop(context);
+            },
+            child: Text(
+              'Cerrar sesión',
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          )
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
